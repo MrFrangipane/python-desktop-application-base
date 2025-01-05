@@ -13,8 +13,9 @@ def make() -> None:
     systray_icon = QSystemTrayIcon(QIcon(configuration.icon_filepath), Components().application)
 
     menu = QMenu()
-    action_exit = menu.addAction("Exit")
-    action_exit.triggered.connect(Components().application.quit)
+    for action in Components().actions.actions:
+        if action.show_in_systray:
+            menu.addAction(action.action)
 
     systray_icon.setContextMenu(menu)
 
