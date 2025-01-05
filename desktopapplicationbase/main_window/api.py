@@ -19,13 +19,13 @@ def make() -> None:
     menu_bar = main_window.menuBar()
     menus = dict()
 
-    for action in Components().actions.actions:
-        menu_path = str(action.menu_path)  # FIXME : hacky and only one level of depth
+    for action_info, action in zip(Components().actions.action_infos, Components().actions.actions):
+        menu_path = str(action_info.menu_path)  # FIXME : hacky and only one level of depth
         if menu_path:
             if menu_path not in menus.keys():
-                menus[menu_path] = menu_bar.addMenu(action.menu_path[0])
+                menus[menu_path] = menu_bar.addMenu(action_info.menu_path[0])
 
-            menus[menu_path].addAction(action.action)
+            menus[menu_path].addAction(action)
 
 
 def show() -> None:

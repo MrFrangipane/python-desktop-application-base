@@ -13,9 +13,9 @@ def make() -> None:
     systray_icon = QSystemTrayIcon(QIcon(configuration.icon_filepath), Components().application)
 
     menu = QMenu()
-    for action in Components().actions.actions:
-        if action.show_in_systray:
-            menu.addAction(action.action)
+    for action_info, action in zip(Components().actions.action_infos, Components().actions.actions):
+        if action_info.show_in_systray:
+            menu.addAction(action)
 
     systray_icon.setContextMenu(menu)
 
