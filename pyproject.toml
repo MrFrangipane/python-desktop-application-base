@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "desktopapplicationbase"
+version = "0.0.1"
 description = "Base building blocks desktop application"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -20,7 +21,6 @@ classifiers = [
 ]
 keywords = ["python", "frangitron", "gui"]
 dynamic = ["dependencies"]
-version = "0.0.0"
 
 [tool.setuptools]
 include-package-data = true
