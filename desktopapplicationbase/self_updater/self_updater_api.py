@@ -1,11 +1,12 @@
 import sys
 import subprocess
 
-from pyside6helpers import icons
+from pyside6helpers import icons, hourglass
 
 from desktopapplicationbase.actions import actions_api
-from desktopapplicationbase.actions.info import ActionInfo
 from desktopapplicationbase.actions.handlers.trigger_simple import TriggerSimpleHandler
+from desktopapplicationbase.actions.info import ActionInfo
+from desktopapplicationbase.application import application_api
 from desktopapplicationbase.configuration import configuration_api
 
 
@@ -19,13 +20,16 @@ def register_actions():
     ))
 
 
+@hourglass.hourglass_wrapper
 def self_update():
     if "--dev" in sys.argv:
         print("Skipping self update because running in dev mode")
         return
 
     configuration = configuration_api.get()
-    command_items = [sys.executable, "-m", "pip", "install", "--upgrade"]
-    subprocess.call(command_items + ["pip"])
+    command_items = [sys.executable, "-m", "pip", "install"]
+    subprocess.call(command_items + ["--upgrade", "pip"])
     subprocess.call(command_items + [configuration.self_update_package_name])
 
+    subprocess.Popen([sys.executable] + sys.argv)
+    application_api.get_instance().quit()
