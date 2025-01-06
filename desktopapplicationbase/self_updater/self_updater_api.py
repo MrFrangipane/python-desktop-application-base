@@ -25,6 +25,7 @@ def self_update():
         return
 
     configuration = configuration_api.get()
-    executable = sys.executable
-    command_items = [executable, "-m", "pip", "install", "--upgrade", configuration.self_update_package_name]
-    subprocess.call(command_items)
+    command_items = [sys.executable, "-m", "pip", "install", "--upgrade"]
+    subprocess.call(command_items + ["pip"])
+    subprocess.call(command_items + [configuration.self_update_package_name])
+
