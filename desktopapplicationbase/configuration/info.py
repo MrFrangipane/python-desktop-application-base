@@ -8,3 +8,4 @@ class ConfigurationInfo:
     icon_filepath: str
     status_bar_logo_filepath: str
     has_systray_icon: bool
+    self_update_package_name: str
