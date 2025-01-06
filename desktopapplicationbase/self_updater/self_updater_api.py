@@ -26,10 +26,10 @@ def self_update():
         print("Skipping self update because running in dev mode")
         return
 
-    configuration = configuration_api.get()
-    command_items = [sys.executable, "-m", "pip", "install"]
-    subprocess.call(command_items + ["--upgrade", "pip"])
-    subprocess.call(command_items + [configuration.self_update_package_name])
+    # configuration = configuration_api.get()
+    # command_items = [sys.executable, "-m", "pip", "install"]
+    # subprocess.call(command_items + ["--upgrade", "pip"])
+    # subprocess.call(command_items + [configuration.self_update_package_name])
 
     subprocess.Popen([sys.executable] + sys.argv)
     application_api.get_instance().quit()
