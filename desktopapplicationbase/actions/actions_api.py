@@ -2,14 +2,15 @@ from PySide6.QtGui import QAction
 
 from pyside6helpers import icons
 
-from desktopapplicationbase.actions.action_info import ActionInfo
-from desktopapplicationbase.actions.actions import Actions
-from desktopapplicationbase.components import Components
+from desktopapplicationbase._components import _Components
+from desktopapplicationbase.actions.component import ActionsComponent
 from desktopapplicationbase.actions.handlers.trigger_simple import TriggerSimpleHandler
+from desktopapplicationbase.actions.info import ActionInfo
+from desktopapplicationbase.application import application_api
 
 
 def register(action_info: ActionInfo):
-    Components().actions.action_infos.append(action_info)
+    _Components().actions.action_infos.append(action_info)
 
     new_action = QAction(action_info.icon, action_info.name)
     action_info.handler.q_action = new_action
@@ -20,12 +21,12 @@ def register(action_info: ActionInfo):
     else:
         new_action.triggered.connect(action_info.handler.triggered)
 
-    Components().actions.actions.append(new_action)
+    _Components().actions.actions.append(new_action)
 
 
 def init():
-    actions = Actions()
-    Components().actions = actions
+    actions_component = ActionsComponent()
+    _Components().actions = actions_component
 
 
 def register_default_actions():
@@ -35,5 +36,9 @@ def register_default_actions():
         icon=icons.right_arrow(),
         menu_path=["&File"],
         show_in_systray=True,
-        handler=TriggerSimpleHandler(Components().application.quit)
+        handler=TriggerSimpleHandler(application_api.get_instance().quit)
     ))
+
+
+def get_instance() -> ActionsComponent:
+    return _Components().actions

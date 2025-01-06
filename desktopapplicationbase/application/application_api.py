@@ -4,11 +4,11 @@ from PySide6.QtWidgets import QApplication
 
 from pyside6helpers import css
 
-from desktopapplicationbase.configuration import api as configuration_api
-from desktopapplicationbase.components import Components
+from desktopapplicationbase._components import _Components
+from desktopapplicationbase.configuration import configuration_api
 
 
-def make() -> None:
+def init() -> None:
     application = QApplication([])
     css.load_onto(application)
     configuration = configuration_api.get()
@@ -16,8 +16,12 @@ def make() -> None:
     if configuration.has_systray_icon:
         application.setQuitOnLastWindowClosed(False)
 
-    Components().application = application
+    _Components().application = application
 
 
 def exec_() -> None:
-    sys.exit(Components().application.exec())
+    sys.exit(_Components().application.exec())
+
+
+def get_instance() -> QApplication:
+    return _Components().application

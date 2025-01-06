@@ -4,15 +4,15 @@ from pyside6helpers.main_window import MainWindow
 
 from pythonhelpers.singleton_metaclass import SingletonMetaclass
 
-from desktopapplicationbase.configuration.configuration import Configuration
-from desktopapplicationbase.actions.actions import Actions
+from desktopapplicationbase.actions.component import ActionsComponent
+from desktopapplicationbase.configuration.info import ConfigurationInfo
 
 
-class Components(metaclass=SingletonMetaclass):
+class _Components(metaclass=SingletonMetaclass):
     def __init__(self):
-        self.configuration: Configuration = None
+        self.configuration: ConfigurationInfo = None
 
-        self.actions: Actions = None
+        self.actions: ActionsComponent = None
         self.application: QApplication = None
         self.main_window: MainWindow = None
         self.systray_icon: QSystemTrayIcon = None

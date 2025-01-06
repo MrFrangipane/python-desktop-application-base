@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Configuration:
+class ConfigurationInfo:
     brand: str
     name: str
     icon_filepath: str
