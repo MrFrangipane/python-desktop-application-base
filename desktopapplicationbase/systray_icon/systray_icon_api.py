@@ -8,6 +8,11 @@ from desktopapplicationbase.configuration import configuration_api
 from desktopapplicationbase.main_window import main_window_api
 
 
+def _systray_activated(reason):
+    if reason == QSystemTrayIcon.ActivationReason.Trigger:
+        main_window_api.get_instance().show()
+
+
 def init() -> None:
     configuration = configuration_api.get()
     if not configuration.has_systray_icon:
@@ -24,9 +29,7 @@ def init() -> None:
     systray_icon.setContextMenu(menu)
 
     main_window = main_window_api.get_instance()
-    if main_window is None:
-        raise ValueError("Main window is not set")
-    systray_icon.activated.connect(main_window.show)
+    systray_icon.activated.connect(_systray_activated)
 
     _Components().systray_icon = systray_icon
 

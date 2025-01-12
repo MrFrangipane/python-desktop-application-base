@@ -34,4 +34,7 @@ def show() -> None:
 
 
 def get_instance() -> MainWindow:
-    return _Components().main_window
+    main_window = _Components().main_window
+    if main_window is None:
+        raise ValueError("Main window is not set")
+    return main_window
